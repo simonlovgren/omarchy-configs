@@ -142,6 +142,7 @@
     "interval": 5,
     "exec": "~/.config/waybar/scripts/vpn-status.sh",
     "on-click": "~/.config/waybar/scripts/vpn-toggle.sh",
+    "on-click-right": "omarchy-launch-floating-terminal-with-presentation ~/.config/waybar/scripts/vpn-select.sh",
     "tooltip": true
   }
 }
