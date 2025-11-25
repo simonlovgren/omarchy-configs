@@ -5,10 +5,16 @@ if ip link show "$VPN_CONFIG" &> /dev/null; then
     sudo wg-quick down "$VPN_CONFIG" 2>/dev/null
     notify-send "VPN" "Disconnected from $VPN_CONFIG" -i network-vpn-disconnected
 else
-    sudo resolvconf -u && sudo wg-quick up "$VPN_CONFIG" 2>/dev/null
-    if [ $? -eq 0 ]; then
-        notify-send "VPN" "Connected to $VPN_CONFIG" -i network-vpn
-    else
-        notify-send "VPN" "Failed to connect to $VPN_CONFIG" -i network-vpn
-    fi
+    RETRIES=2
+    while [ "$RETRIES" ]; do
+        ((RETRIES--))
+        sudo resolvconf -u
+        if sudo wg-quick up "$VPN_CONFIG" 2>/dev/null; then
+            notify-send "VPN" "Connected to $VPN_CONFIG" -i network-vpn
+            exit 0
+        elif [ "$RETRIES" -eq 0 ]; then
+            notify-send "VPN" "Failed to connect to $VPN_CONFIG" -i network-vpn
+        fi
+        sleep 1
+    done
 fi
