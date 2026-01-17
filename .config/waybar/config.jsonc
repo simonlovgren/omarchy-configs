@@ -21,7 +21,8 @@
       "active": "", // focused workspace on current monitor
       "visible": "", // focused workspace on other monitors
       "default": "",
-      "empty": "" // persistent (created by this plugin)
+      "empty": "", // persistent (created by this plugin)
+      "5": "\uf1b6"
     },
     "on-scroll-up": "hyprctl dispatch split-cycleworkspaces -1",
     "on-scroll-down": "hyprctl dispatch split-cycleworkspaces +1",
